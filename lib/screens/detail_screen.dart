@@ -134,19 +134,28 @@ class _RecipeContent extends StatelessWidget {
               const SizedBox(height: 16),
               Text('Ingredients', style: theme.textTheme.titleLarge),
               const SizedBox(height: 8),
-              ...meal.ingredients.map(
-                (ing) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(Icons.check_circle_outline,
-                          size: 20, color: theme.colorScheme.primary),
-                      const SizedBox(width: 8),
-                      Expanded(child: Text('${ing.measure} ${ing.name}'.trim())),
-                    ],
-                  ),
-                ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: meal.ingredients.length,
+                itemBuilder: (context, index) {
+                  final ing = meal.ingredients[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(Icons.check_circle_outline,
+                            size: 20, color: theme.colorScheme.primary),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text('${ing.measure} ${ing.name}'.trim()),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 16),
               Text('Instructions', style: theme.textTheme.titleLarge),

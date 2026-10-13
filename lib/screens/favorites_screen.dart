@@ -9,7 +9,11 @@ import '../widgets/state_views.dart';
 import 'detail_screen.dart';
 
 class FavoritesScreen extends StatelessWidget {
-  const FavoritesScreen({super.key, required this.api, required this.favorites});
+  const FavoritesScreen({
+    super.key,
+    required this.api,
+    required this.favorites,
+  });
   final MealApi api;
   final FavoritesController favorites;
 
@@ -22,6 +26,8 @@ class FavoritesScreen extends StatelessWidget {
       ..showSnackBar(
         SnackBar(
           content: Text('Deleted "${meal.name}"'),
+          duration: const Duration(seconds: 2),
+          persist: false,
           action: SnackBarAction(
             label: 'UNDO',
             onPressed: () => favorites.add(meal, index: index),
@@ -51,7 +57,10 @@ class FavoritesScreen extends StatelessWidget {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
-            const SnackBar(content: Text('All favorites deleted')),
+            const SnackBar(
+              content: Text('All favorites deleted'),
+              duration: Duration(seconds: 2),
+            ),
           );
       }
     }
@@ -92,15 +101,19 @@ class FavoritesScreen extends StatelessWidget {
                       direction: DismissDirection.endToStart,
                       background: Container(
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 6),
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
                         padding: const EdgeInsets.only(right: 24),
                         alignment: Alignment.centerRight,
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.error,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Icon(Icons.delete,
-                            color: Theme.of(context).colorScheme.onError),
+                        child: Icon(
+                          Icons.delete,
+                          color: Theme.of(context).colorScheme.onError,
+                        ),
                       ),
                       confirmDismiss: (_) => confirmDelete(
                         context,
@@ -112,8 +125,10 @@ class FavoritesScreen extends StatelessWidget {
                         meal: meal,
                         trailing: IconButton(
                           tooltip: 'Delete',
-                          icon: Icon(Icons.delete_outline,
-                              color: Theme.of(context).colorScheme.error),
+                          icon: Icon(
+                            Icons.delete_outline,
+                            color: Theme.of(context).colorScheme.error,
+                          ),
                           onPressed: () => _deleteWithConfirm(context, meal),
                         ),
                         onTap: () => Navigator.push(
